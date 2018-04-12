@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Extremely simple web app</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h2 th:text="${greeter.message}" />
+	<!--  yes this is explicitly disabling output escaping. Freemarker does not have it as default, but that was more work to set up, and it's about the principle, right? -->
+	<p th:utext="'And a special hello to ' + ${user.fullname} + '!'" />
+	<br />
+	<br /> Because you are going to the following events:
+	<br />
+	<ul>
+		<li th:each="eventname : ${user.eventNames}" th:text="${eventname}" />
+	</ul>
+	
+	<br/>
+	Add event here:<br/>
+	<form th:action="@{/addEvent}" method="post">
+		<select name="eventId">
+			<option th:each="event : ${possibleEvents}"
+				th:text="${event.eventName}" th:attr="value=${event.id}" />
+		</select> 
+		<input type="submit" value="add Course" />
+	</form>
+	<br />
+	<br /> If you want to sign out, please press the button
+	<br />
+	<form th:action="@{/logout}" method="post">
+		<input type="submit" value="Sign Out" />
+	</form>
+</body>
+
+</html>
